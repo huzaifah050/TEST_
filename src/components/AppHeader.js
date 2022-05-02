@@ -34,6 +34,7 @@ function AppHeader() {
 					</Link>
 
 					<Modal
+						data-testid="modal-btn"
 						customBtn={<Button variant="outline">Add Product</Button>}
 						initialState={{ name: '', price: '' }}
 						action={addProduct}

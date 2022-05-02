@@ -12,15 +12,15 @@ import {
 	FormLabel,
 	Input,
 	useDisclosure,
-	Spinner,
 } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
-import { addProduct } from '../store/medicineSlice';
+import { useRouter } from 'next/router';
 
 function ModalComponent({ customBtn, initialState, action }) {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const initialRef = useRef();
 	const dispatch = useDispatch();
+	const router = useRouter();
 
 	const [formData, setFormData] = useState({
 		name: initialState.name,
@@ -44,8 +44,8 @@ function ModalComponent({ customBtn, initialState, action }) {
 
 		const isNameSame = formData.name === initialState.name;
 		const isPriceSame =
-			parseFloat(formData.price).toFixed(3) ===
-			parseFloat(initialState.price).toFixed(3);
+			parseFloat(formData.price).toFixed(2) ===
+			parseFloat(initialState.price).toFixed(2);
 
 		//Check if there was an update
 		if (isNameSame && isPriceSame) {
@@ -68,6 +68,7 @@ function ModalComponent({ customBtn, initialState, action }) {
 		dispatch(action(newData));
 		resetFormData();
 		onClose();
+		router.reload();
 	};
 
 	//Add the onClick handler as a prop to the custom button
@@ -137,7 +138,6 @@ function ModalComponent({ customBtn, initialState, action }) {
 							>
 								Cancel
 							</Button>
-							{/* <Spinner color="brand.main" /> */}
 						</ModalFooter>
 					</form>
 				</ModalContent>
